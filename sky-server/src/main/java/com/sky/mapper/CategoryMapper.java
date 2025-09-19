@@ -20,7 +20,7 @@ public interface CategoryMapper {
 
     // 删除分类
     @Delete("delete from category where id = #{id}")
-    void DeleteById(Integer id);
+    void DeleteById(Long id);
 
     // 修改菜品
     void UpdateById(Category category);

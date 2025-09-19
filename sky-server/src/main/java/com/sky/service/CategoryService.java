@@ -9,7 +9,7 @@ public interface CategoryService {
 
     void addCategory(CategoryDTO categotyDTO);
 
-    void DeleteById(Integer id);
+    void DeleteById(Long id);
 
     void UpdateById(CategoryDTO categoryDTO);
 
