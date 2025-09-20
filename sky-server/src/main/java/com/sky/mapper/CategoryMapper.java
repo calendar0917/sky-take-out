@@ -1,5 +1,6 @@
 package com.sky.mapper;
 
+
 import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
 import com.sky.dto.CategoryPageQueryDTO;
@@ -23,7 +24,7 @@ public interface CategoryMapper {
 
     // 删除分类
     @Delete("delete from category where id = #{id}")
-    void DeleteById(Long id);
+    void DeleteById(Category category);
 
     // 修改菜品
     @AutoFill(OperationType.UPDATE)

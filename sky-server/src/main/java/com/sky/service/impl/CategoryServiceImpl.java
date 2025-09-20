@@ -40,6 +40,9 @@ public class CategoryServiceImpl implements CategoryService {
     public void DeleteById(Long id) {
         // 1. 检查该分类下是否有关联菜品
         Integer dishCount = dishMapper.countByCategoryId(id);
+        Category category = new Category();
+        category.setId(id);
+
         if (dishCount > 0) {
             // 有关联菜品，抛出异常（自定义异常，需提前定义）
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
@@ -53,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         // 3. 无关联数据，执行删除
-        categoryMapper.DeleteById(id);
+        categoryMapper.DeleteById(category);
     }
     @Override
     public PageResult pageQueryCategory(CategoryPageQueryDTO categoryPageQueryDTO) {

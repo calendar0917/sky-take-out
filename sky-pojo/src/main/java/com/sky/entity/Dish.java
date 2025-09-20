@@ -32,7 +32,6 @@ public class Dish implements Serializable {
 
     //图片
     private String image;
-
     //描述信息
     private String description;
 
