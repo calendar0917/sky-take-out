@@ -8,8 +8,11 @@ import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper
 public interface SetmealMapper {
@@ -18,4 +21,12 @@ public interface SetmealMapper {
     void addSetmeal(Setmeal setmeal);
 
     Page<Setmeal> pageQuerySetmeal(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    void deleteSetmeals(@Param("ids") List<Long> ids);
+
+    @Select("select * from setmeal where id = #{id}")
+    Setmeal getById(Long id);
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Setmeal setmeal);
 }

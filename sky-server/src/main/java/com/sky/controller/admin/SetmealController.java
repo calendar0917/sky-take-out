@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Api(tags = "套餐相关接口")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/setmeal")
@@ -46,7 +46,49 @@ public class SetmealController {
         return Result.success(pageResult);
     }
 
+    /**
+     * 删除套餐
+     * @param ids
+     * @return
+     */
     @DeleteMapping
     @ApiOperation(value = "删除套餐")
-    public Result deleteSetmeal(List<Long> ids)
+    public Result deleteSetmeals(@RequestParam List<Long> ids){
+        setmealService.deleteSetmeals(ids);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询套餐")
+    public Result getById(@PathVariable Long id){
+        Setmeal setmeal = setmealService.getById(id);
+        return Result.success(setmeal);
+    }
+
+    /**
+     * 修改套餐
+     * @param setmealDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation(value = "修改套餐")
+    public Result changeSetmeal(@RequestBody SetmealDTO setmealDTO){
+        setmealService.update(setmealDTO);
+        return Result.success();
+    }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation(value = "启用、禁用套餐")
+    public Result startOrStop(@PathVariable Integer status,@RequestParam Long id){
+        SetmealDTO setmealDTO = new SetmealDTO();
+        setmealDTO.setStatus(status);
+        setmealDTO.setId(id);
+        setmealService.update(setmealDTO);
+        return Result.success();
+    }
 }
