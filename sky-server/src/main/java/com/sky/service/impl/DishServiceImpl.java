@@ -61,6 +61,10 @@ public class DishServiceImpl implements DishService {
         return pageResult;
     }
 
+    /**
+     * 删除 ids
+     * @param ids
+     */
     @Override
     public void deleteBatch(List<Long> ids) {
         // 判断当前商品是否能删除 --> 是否起售
@@ -84,6 +88,11 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+    /**
+     * 查询 包含口味
+     * @param id
+     * @return
+     */
     @Override
     public DishVO getByIdwithFlavor(Long id) {
         // 查菜品
@@ -98,6 +107,10 @@ public class DishServiceImpl implements DishService {
 
     }
 
+    /**
+     * 更新 包含口味
+     * @param dishDTO
+     */
     @Override
     public void updateWithFlavor(DishDTO dishDTO) {
         Dish dish = new Dish();
@@ -115,6 +128,11 @@ public class DishServiceImpl implements DishService {
 
     }
 
+    /**
+     * 根据id查询
+     * @param categoryid
+     * @return
+     */
     @Override
     public List<DishVO> getByCategoryId(Long categoryid) {
         List<DishVO> dishVOS = dishMapper.getByCategoryId(categoryid);
@@ -143,5 +161,18 @@ public class DishServiceImpl implements DishService {
         }
 
         return dishVOList;
+    }
+
+    /**
+     * 启停售菜品
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Dish dish = new Dish();
+        dish.setId(id);
+        dish.setStatus(status);
+        dishMapper.update(dish);
     }
 }
