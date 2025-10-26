@@ -20,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -112,5 +113,11 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
 
+    }
+
+    @Override
+    public List<DishVO> getByCategoryId(Long categoryid) {
+        List<DishVO> dishVOS = dishMapper.getByCategoryId(categoryid);
+        return dishVOS;
     }
 }
