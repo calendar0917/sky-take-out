@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.sky.result.Result.success;
@@ -86,7 +87,7 @@ public class EmployeeController {
      * @param employeePageQueryDTO
      * @return
      */
-    @GetMapping
+    @GetMapping("/page")
     @ApiOperation(value = "分页查询")
     public Result<PageResult> pageQuery(EmployeePageQueryDTO employeePageQueryDTO){
         log.info("分页查询{}",employeePageQueryDTO);
@@ -105,6 +106,32 @@ public class EmployeeController {
     public Result startOrStop(@PathVariable Integer status, Long id){
         log.info("员工禁用、启用");
         employeeService.startOrStop(status,id);
+        return success();
+    }
+
+    /**
+     * 根据 id 查询员工
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation(value= "根据 id 查询员工")
+    public Result<Employee> getById(@PathVariable Long id){
+        log.info("查询 id 为 {} 的员工",id);
+        Employee employee = employeeService.getById(id);
+        return success(employee);
+    }
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation(value = "修改员工信息")
+    public Result update(@RequestBody EmployeeDTO employeeDTO){
+        log.info("修改员工 {}",employeeDTO);
+        employeeService.update(employeeDTO);
         return success();
     }
 
