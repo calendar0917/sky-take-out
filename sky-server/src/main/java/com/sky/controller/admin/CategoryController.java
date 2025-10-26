@@ -90,14 +90,15 @@ public class CategoryController {
     }
 
     /**
-     * 根据类型查询分类
+     * 查询分类
      * @param type
      * @return
      */
     @GetMapping("/list")
-    @ApiOperation("根据类型查询分类")
-    public Result<List<Category>> list(Integer type){
+    @ApiOperation("查询分类")
+    public Result<List<Category>> list(Integer type) {
         List<Category> list = categoryService.list(type);
         return Result.success(list);
     }
+
 }
