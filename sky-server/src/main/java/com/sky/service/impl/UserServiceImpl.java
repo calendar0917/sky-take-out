@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
                     .build();
             userMapper.insert(user);//后绪步骤实现
         }
-
+        log.info("新用户注册后的 id：{}", user.getId());
         //返回这个用户对象
         return user;
     }
