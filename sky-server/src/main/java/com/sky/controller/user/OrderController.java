@@ -65,11 +65,8 @@ public class OrderController {
      */
     @GetMapping("/historyOrders")
     @ApiOperation("查询历史订单")
-    public Result<PageResult> getHistory(int page,int pageSize, Integer status) {
+    public Result<PageResult> getHistory(int page,int pageSize, @RequestParam(required = false) Integer status) {
         log.info("查询订单{},,{},{}",page,pageSize,status );
-        if(status == null){
-            status = 1;
-        }
         PageResult pageResult = orderService.getHistory(page,pageSize,status);
         return Result.success(pageResult);
     }
