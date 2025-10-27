@@ -1,5 +1,6 @@
 package com.sky.controller.user;
 
+import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.result.PageResult;
@@ -40,4 +41,75 @@ public class OrderController {
         return Result.success(orderSubmitVO);
     }
 
+    /**
+     * 订单支付
+     *
+     * @param ordersPaymentDTO
+     * @return
+     */
+    @PutMapping("/payment")
+    @ApiOperation("订单支付")
+    public Result<OrderPaymentVO> payment(@RequestBody OrdersPaymentDTO ordersPaymentDTO) throws Exception {
+        log.info("订单支付：{}", ordersPaymentDTO);
+        OrderPaymentVO orderPaymentVO = orderService.payment(ordersPaymentDTO);
+        log.info("生成预支付交易单：{}", orderPaymentVO);
+        return Result.success(orderPaymentVO);
+    }
+
+    /**
+     * 查询历史订单
+     * @param page
+     * @param pageSize
+     * @param status
+     * @return
+     */
+    @GetMapping("/historyOrders")
+    @ApiOperation("查询历史订单")
+    public Result<PageResult> getHistory(int page,int pageSize, Integer status) {
+        log.info("查询订单{},,{},{}",page,pageSize,status );
+        if(status == null){
+            status = 1;
+        }
+        PageResult pageResult = orderService.getHistory(page,pageSize,status);
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 查询订单详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/orderDetail/{id}")
+    @ApiOperation(value = "查询订单详情")
+    public Result<OrderVO> details(@PathVariable("id") Long id){
+        log.info("查询订单详情{}", id);
+        OrderVO orderVO = orderService.details(id);
+        return Result.success(orderVO);
+    }
+
+    /**
+     * 取消订单
+     * @param id
+     * @return
+     */
+    @PutMapping("/cancel/{id}")
+    @ApiOperation(value = "取消订单")
+    public Result cancel(@PathVariable Long id){
+        log.info("取消订单{}", id);
+        orderService.cancel(id);
+        return Result.success();
+    }
+
+    /**
+     * 再来一单
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/repetition/{id}")
+    @ApiOperation("再来一单")
+    public Result repetition(@PathVariable Long id) {
+        orderService.repetition(id);
+        return Result.success();
+    }
 }
